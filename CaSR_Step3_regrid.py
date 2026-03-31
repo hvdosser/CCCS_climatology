@@ -25,9 +25,9 @@ dg_target = xr.Dataset(
 )
 
 # Loop over variables:  temperature 'TT' and precipitation 'PR'
-# Loop over monthly 'mon' and 3-month seasonal 'sea' time periods
+# Loop over monthly 'mon', 3-month seasonal 'sea', and 5-year decadal 'dcp' time periods
 var_name = ['TT', 'PR']
-period = ['mon', 'sea']
+period = ['mon', 'sea', 'dcp_Ann', 'dcp_MJJAS', 'dcp_NDJFM']
 for i, n in enumerate(var_name):
     for j, m in enumerate(period):
 
@@ -40,6 +40,18 @@ for i, n in enumerate(var_name):
             dp_ut = xr.open_dataset(data_path+'/CaSR3P2_AirTemp-Seasonal/UpperTercile_parametric.nc', engine='netcdf4') 
             dp_lt = xr.open_dataset(data_path+'/CaSR3P2_AirTemp-Seasonal/LowerTercile_parametric.nc', engine='netcdf4') 
             dp_pt = xr.open_dataset(data_path+'/CaSR3P2_AirTemp-Seasonal/Percentiles_parametric.nc', engine='netcdf4') 
+        elif (n == 'TT') & (m == 'dcp_Ann'):
+            dp_ut = xr.open_dataset(data_path+'/CaSR3P2_AirTemp-Decadal_Ann/TT-Analysis_UpperTercile_parametric.nc', engine='netcdf4') 
+            dp_lt = xr.open_dataset(data_path+'/CaSR3P2_AirTemp-Decadal_Ann/TT-Analysis_LowerTercile_parametric.nc', engine='netcdf4') 
+            dp_pt = xr.open_dataset(data_path+'/CaSR3P2_AirTemp-Decadal_Ann/TT-Analysis_Percentiles_parametric.nc', engine='netcdf4')
+        elif (n == 'TT') & (m == 'dcp_MJJAS'):
+            dp_ut = xr.open_dataset(data_path+'/CaSR3P2_AirTemp-Decadal_MJJAS/TT-Analysis_UpperTercile_parametric.nc', engine='netcdf4') 
+            dp_lt = xr.open_dataset(data_path+'/CaSR3P2_AirTemp-Decadal_MJJAS/TT-Analysis_LowerTercile_parametric.nc', engine='netcdf4') 
+            dp_pt = xr.open_dataset(data_path+'/CaSR3P2_AirTemp-Decadal_MJJAS/TT-Analysis_Percentiles_parametric.nc', engine='netcdf4')
+        elif (n == 'TT') & (m == 'dcp_NDJFM'):
+            dp_ut = xr.open_dataset(data_path+'/CaSR3P2_AirTemp-Decadal_NDJFM/TT-Analysis_UpperTercile_parametric.nc', engine='netcdf4') 
+            dp_lt = xr.open_dataset(data_path+'/CaSR3P2_AirTemp-Decadal_NDJFM/TT-Analysis_LowerTercile_parametric.nc', engine='netcdf4') 
+            dp_pt = xr.open_dataset(data_path+'/CaSR3P2_AirTemp-Decadal_NDJFM/TT-Analysis_Percentiles_parametric.nc', engine='netcdf4')
         elif (n == 'PR') & (m == 'mon'):
             dp_ut = xr.open_dataset(data_path+'/CaSR3P2_Precip-Monthly/UpperTercile_parametric.nc', engine='netcdf4') 
             dp_lt = xr.open_dataset(data_path+'/CaSR3P2_Precip-Monthly/LowerTercile_parametric.nc', engine='netcdf4') 
@@ -48,6 +60,18 @@ for i, n in enumerate(var_name):
             dp_ut = xr.open_dataset(data_path+'/CaSR3P2_Precip-Seasonal/UpperTercile_parametric.nc', engine='netcdf4') 
             dp_lt = xr.open_dataset(data_path+'/CaSR3P2_Precip-Seasonal/LowerTercile_parametric.nc', engine='netcdf4') 
             dp_pt = xr.open_dataset(data_path+'/CaSR3P2_Precip-Seasonal/Percentiles_parametric.nc', engine='netcdf4') 
+        elif (n == 'PR') & (m == 'dcp_Ann'):
+            dp_ut = xr.open_dataset(data_path+'/CaSR3P2_Precip-Decadal_Ann/PR_UpperTercile_parametric.nc', engine='netcdf4') 
+            dp_lt = xr.open_dataset(data_path+'/CaSR3P2_Precip-Decadal_Ann/PR_LowerTercile_parametric.nc', engine='netcdf4') 
+            dp_pt = xr.open_dataset(data_path+'/CaSR3P2_Precip-Decadal_Ann/PR_Percentiles_parametric.nc', engine='netcdf4')
+        elif (n == 'PR') & (m == 'dcp_MJJAS'):
+            dp_ut = xr.open_dataset(data_path+'/CaSR3P2_Precip-Decadal_MJJAS/PR_UpperTercile_parametric.nc', engine='netcdf4') 
+            dp_lt = xr.open_dataset(data_path+'/CaSR3P2_Precip-Decadal_MJJAS/PR_LowerTercile_parametric.nc', engine='netcdf4') 
+            dp_pt = xr.open_dataset(data_path+'/CaSR3P2_Precip-Decadal_MJJAS/PR_Percentiles_parametric.nc', engine='netcdf4')
+        elif (n == 'PR') & (m == 'dcp_NDJFM'):
+            dp_ut = xr.open_dataset(data_path+'/CaSR3P2_Precip-Decadal_NDJFM/PR_UpperTercile_parametric.nc', engine='netcdf4') 
+            dp_lt = xr.open_dataset(data_path+'/CaSR3P2_Precip-Decadal_NDJFM/PR_LowerTercile_parametric.nc', engine='netcdf4') 
+            dp_pt = xr.open_dataset(data_path+'/CaSR3P2_Precip-Decadal_NDJFM/PR_Percentiles_parametric.nc', engine='netcdf4') 
     
         # Create the regridder
         regridder = xe.Regridder(
@@ -69,6 +93,18 @@ for i, n in enumerate(var_name):
             dp_ut_out.to_netcdf(data_path+'/CaSR3P2_AirTemp-Seasonal/UpperTercile_parametric_regridded.nc', engine='netcdf4') 
             dp_lt_out.to_netcdf(data_path+'/CaSR3P2_AirTemp-Seasonal/LowerTercile_parametric_regridded.nc', engine='netcdf4') 
             dp_pt_out.to_netcdf(data_path+'/CaSR3P2_AirTemp-Seasonal/Percentiles_parametric_regridded.nc', engine='netcdf4') 
+        elif (n == 'TT') & (m == 'dcp_Ann'):
+            dp_ut_out.to_netcdf(data_path+'/CaSR3P2_AirTemp-Decadal_Ann/UpperTercile_parametric_regridded.nc', engine='netcdf4') 
+            dp_lt_out.to_netcdf(data_path+'/CaSR3P2_AirTemp-Decadal_Ann/LowerTercile_parametric_regridded.nc', engine='netcdf4') 
+            dp_pt_out.to_netcdf(data_path+'/CaSR3P2_AirTemp-Decadal_Ann/Percentiles_parametric_regridded.nc', engine='netcdf4') 
+        elif (n == 'TT') & (m == 'dcp_MJJAS'):
+            dp_ut_out.to_netcdf(data_path+'/CaSR3P2_AirTemp-Decadal_MJJAS/UpperTercile_parametric_regridded.nc', engine='netcdf4') 
+            dp_lt_out.to_netcdf(data_path+'/CaSR3P2_AirTemp-Decadal_MJJAS/LowerTercile_parametric_regridded.nc', engine='netcdf4') 
+            dp_pt_out.to_netcdf(data_path+'/CaSR3P2_AirTemp-Decadal_MJJAS/Percentiles_parametric_regridded.nc', engine='netcdf4') 
+        elif (n == 'TT') & (m == 'dcp_NDJFM'):
+            dp_ut_out.to_netcdf(data_path+'/CaSR3P2_AirTemp-Decadal_NDJFM/UpperTercile_parametric_regridded.nc', engine='netcdf4') 
+            dp_lt_out.to_netcdf(data_path+'/CaSR3P2_AirTemp-Decadal_NDJFM/LowerTercile_parametric_regridded.nc', engine='netcdf4') 
+            dp_pt_out.to_netcdf(data_path+'/CaSR3P2_AirTemp-Decadal_NDJFM/Percentiles_parametric_regridded.nc', engine='netcdf4')         
         elif (n == 'PR') & (m == 'mon'):
             dp_ut_out.to_netcdf(data_path+'/CaSR3P2_Precip-Monthly/UpperTercile_parametric_regridded.nc', engine='netcdf4') 
             dp_lt_out.to_netcdf(data_path+'/CaSR3P2_Precip-Monthly/LowerTercile_parametric_regridded.nc', engine='netcdf4') 
@@ -77,3 +113,15 @@ for i, n in enumerate(var_name):
             dp_ut_out.to_netcdf(data_path+'/CaSR3P2_Precip-Seasonal/UpperTercile_parametric_regridded.nc', engine='netcdf4') 
             dp_lt_out.to_netcdf(data_path+'/CaSR3P2_Precip-Seasonal/LowerTercile_parametric_regridded.nc', engine='netcdf4') 
             dp_pt_out.to_netcdf(data_path+'/CaSR3P2_Precip-Seasonal/Percentiles_parametric_regridded.nc', engine='netcdf4') 
+        elif (n == 'PR') & (m == 'dcp_Ann'):
+            dp_ut_out.to_netcdf(data_path+'/CaSR3P2_Precip-Decadal_Ann/UpperTercile_parametric_regridded.nc', engine='netcdf4') 
+            dp_lt_out.to_netcdf(data_path+'/CaSR3P2_Precip-Decadal_Ann/LowerTercile_parametric_regridded.nc', engine='netcdf4') 
+            dp_pt_out.to_netcdf(data_path+'/CaSR3P2_Precip-Decadal_Ann/Percentiles_parametric_regridded.nc', engine='netcdf4') 
+        elif (n == 'PR') & (m == 'dcp_MJJAS'):
+            dp_ut_out.to_netcdf(data_path+'/CaSR3P2_Precip-Decadal_MJJAS/UpperTercile_parametric_regridded.nc', engine='netcdf4') 
+            dp_lt_out.to_netcdf(data_path+'/CaSR3P2_Precip-Decadal_MJJAS/LowerTercile_parametric_regridded.nc', engine='netcdf4') 
+            dp_pt_out.to_netcdf(data_path+'/CaSR3P2_Precip-Decadal_MJJAS/Percentiles_parametric_regridded.nc', engine='netcdf4') 
+        elif (n == 'PR') & (m == 'dcp_NDJFM'):
+            dp_ut_out.to_netcdf(data_path+'/CaSR3P2_Precip-Decadal_NDJFM/UpperTercile_parametric_regridded.nc', engine='netcdf4') 
+            dp_lt_out.to_netcdf(data_path+'/CaSR3P2_Precip-Decadal_NDJFM/LowerTercile_parametric_regridded.nc', engine='netcdf4') 
+            dp_pt_out.to_netcdf(data_path+'/CaSR3P2_Precip-Decadal_NDJFM/Percentiles_parametric_regridded.nc', engine='netcdf4') 

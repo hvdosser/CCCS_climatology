@@ -17,10 +17,10 @@ grid_path = 'path_to_grid_on_gpsc'
 data_path = 'path_to_data_on_gpsc'
 save_path = 'path_to_save_files_on_gpsc'
 
-# Loop over variables: temperature 'TT' and precipitation 'PR'
-# Loop over monthly 'mon' and 3-month seasonal 'sea' time periods
+# Loop over variables:  temperature 'TT' and precipitation 'PR'
+# Loop over monthly 'mon', 3-month seasonal 'sea', and 5-year decadal 'dcp' time periods
 var_name = ['TT', 'PR'] 
-period = ['mon', 'sea'] 
+period = ['mon', 'sea', 'dcp_Ann', 'dcp_MJJAS', 'dcp_NDJFM'] 
 for i, n in enumerate(var_name):
     for j, m in enumerate(period):
 
@@ -33,6 +33,18 @@ for i, n in enumerate(var_name):
             dp_ut = xr.open_dataset(data_path+'/CaSR3P2_AirTemp-Seasonal/UpperTercile_parametric_regridded.nc', engine='netcdf4') 
             dp_lt = xr.open_dataset(data_path+'/CaSR3P2_AirTemp-Seasonal/LowerTercile_parametric_regridded.nc', engine='netcdf4') 
             dp_pt = xr.open_dataset(data_path+'/CaSR3P2_AirTemp-Seasonal/Percentiles_parametric_regridded.nc', engine='netcdf4') 
+        elif (n == 'TT') & (m == 'dcp_Ann'):
+            dp_ut = xr.open_dataset(data_path+'/CaSR3P2_AirTemp-Decadal_Ann/UpperTercile_parametric_regridded.nc', engine='netcdf4') 
+            dp_lt = xr.open_dataset(data_path+'/CaSR3P2_AirTemp-Decadal_Ann/LowerTercile_parametric_regridded.nc', engine='netcdf4') 
+            dp_pt = xr.open_dataset(data_path+'/CaSR3P2_AirTemp-Decadal_Ann/Percentiles_parametric_regridded.nc', engine='netcdf4') 
+        elif (n == 'TT') & (m == 'dcp_MJJAS'):
+            dp_ut = xr.open_dataset(data_path+'/CaSR3P2_AirTemp-Decadal_MJJAS/UpperTercile_parametric_regridded.nc', engine='netcdf4') 
+            dp_lt = xr.open_dataset(data_path+'/CaSR3P2_AirTemp-Decadal_MJJAS/LowerTercile_parametric_regridded.nc', engine='netcdf4') 
+            dp_pt = xr.open_dataset(data_path+'/CaSR3P2_AirTemp-Decadal_MJJAS/Percentiles_parametric_regridded.nc', engine='netcdf4') 
+        elif (n == 'TT') & (m == 'dcp_NDJFM'):
+            dp_ut = xr.open_dataset(data_path+'/CaSR3P2_AirTemp-Decadal_NDJFM/UpperTercile_parametric_regridded.nc', engine='netcdf4') 
+            dp_lt = xr.open_dataset(data_path+'/CaSR3P2_AirTemp-Decadal_NDJFM/LowerTercile_parametric_regridded.nc', engine='netcdf4') 
+            dp_pt = xr.open_dataset(data_path+'/CaSR3P2_AirTemp-Decadal_NDJFM/Percentiles_parametric_regridded.nc', engine='netcdf4')             
         elif (n == 'PR') & (m == 'mon'):
             dp_ut = xr.open_dataset(data_path+'/CaSR3P2_Precip-Monthly/UpperTercile_parametric_regridded.nc', engine='netcdf4') 
             dp_lt = xr.open_dataset(data_path+'/CaSR3P2_Precip-Monthly/LowerTercile_parametric_regridded.nc', engine='netcdf4') 
@@ -41,6 +53,18 @@ for i, n in enumerate(var_name):
             dp_ut = xr.open_dataset(data_path+'/CaSR3P2_Precip-Seasonal/UpperTercile_parametric_regridded.nc', engine='netcdf4') 
             dp_lt = xr.open_dataset(data_path+'/CaSR3P2_Precip-Seasonal/LowerTercile_parametric_regridded.nc', engine='netcdf4') 
             dp_pt = xr.open_dataset(data_path+'/CaSR3P2_Precip-Seasonal/Percentiles_parametric_regridded.nc', engine='netcdf4') 
+        elif (n == 'PR') & (m == 'dcp_Ann'):
+            dp_ut = xr.open_dataset(data_path+'/CaSR3P2_Precip-Decadal_Ann/UpperTercile_parametric_regridded.nc', engine='netcdf4') 
+            dp_lt = xr.open_dataset(data_path+'/CaSR3P2_Precip-Decadal_Ann/LowerTercile_parametric_regridded.nc', engine='netcdf4') 
+            dp_pt = xr.open_dataset(data_path+'/CaSR3P2_Precip-Decadal_Ann/Percentiles_parametric_regridded.nc', engine='netcdf4') 
+        elif (n == 'PR') & (m == 'dcp_MJJAS'):
+            dp_ut = xr.open_dataset(data_path+'/CaSR3P2_Precip-Decadal_MJJAS/UpperTercile_parametric_regridded.nc', engine='netcdf4') 
+            dp_lt = xr.open_dataset(data_path+'/CaSR3P2_Precip-Decadal_MJJAS/LowerTercile_parametric_regridded.nc', engine='netcdf4') 
+            dp_pt = xr.open_dataset(data_path+'/CaSR3P2_Precip-Decadal_MJJAS/Percentiles_parametric_regridded.nc', engine='netcdf4') 
+        elif (n == 'PR') & (m == 'dcp_NDJFM'):
+            dp_ut = xr.open_dataset(data_path+'/CaSR3P2_Precip-Decadal_NDJFM/UpperTercile_parametric_regridded.nc', engine='netcdf4') 
+            dp_lt = xr.open_dataset(data_path+'/CaSR3P2_Precip-Decadal_NDJFM/LowerTercile_parametric_regridded.nc', engine='netcdf4') 
+            dp_pt = xr.open_dataset(data_path+'/CaSR3P2_Precip-Decadal_NDJFM/Percentiles_parametric_regridded.nc', engine='netcdf4') 
     
         # Combine all five percentiles into a single dataset
         dp_lt["percentile"] = dp_lt[n].expand_dims("percentile")
@@ -60,7 +84,7 @@ for i, n in enumerate(var_name):
         # Adjust coordinate names
         ds = ds.assign_coords(percentile=(ds.percentile*100))
         if m == 'sea':
-            ds = ds.rename({'month':'season'})           
+            ds = ds.rename({'month':'season'}) 
         ds = ds.rename({'lon':'longitude'})
         ds = ds.rename({'lat':'latitude'})
             
@@ -133,6 +157,54 @@ for i, n in enumerate(var_name):
                     'units': 'mm', 
                     'accumulation_period': '1D'
                     }
+        elif m == 'dcp_Ann':
+            if n == 'TT':
+                ds['TT'].attrs = {
+                    'long_name': 'air temperature (1.5m) / temperature de l’air (1,5m)', 
+                    'description_short_en': 'percentiles of mean 1.5m air temperature, averaged over overlapping 5-year periods', 
+                    'description_short_fr': 'percentiles de la temperature moyenne de l’air a 1,5m; moyennes sur des periodes de cinq ans se chevauchant', 
+                    'units': 'C'
+                    }
+            elif n == 'PR':
+                ds['PR'].attrs = {
+                    'long_name': 'quantity of precipitation / quantite de precipitations', 
+                    'description_short_en': 'percentiles of quantity of precipitation accumulated in mm per day, averaged over overlapping 5-year periods', 
+                    'description_short_fr': 'percentiles de la quantite de precipitations accumulees en mm par jour; moyennes sur des periodes de cinq ans se chevauchant', 
+                    'units': 'mm', 
+                    'accumulation_period': '1D'
+                    }
+        elif m == 'dcp_MJJAS':
+            if n == 'TT':
+                ds['TT'].attrs = {
+                    'long_name': 'air temperature (1.5m) / temperature de l’air (1,5m)', 
+                    'description_short_en': 'percentiles of mean 1.5m air temperature for the months of MJJAS, averaged over overlapping 5-year periods', 
+                    'description_short_fr': 'percentiles de la temperature moyenne de l’air a 1,5m pour les mois de MJJAS, moyennes sur des periodes de cinq ans se chevauchant', 
+                    'units': 'C'
+                    }
+            elif n == 'PR':
+                ds['PR'].attrs = {
+                    'long_name': 'quantity of precipitation / quantite de precipitations', 
+                    'description_short_en': 'percentiles of quantity of precipitation accumulated in mm per day for the months of MJJAS, averaged over overlapping 5-year periods', 
+                    'description_short_fr': 'percentiles de la quantite de precipitations accumulees en mm par jour pour les mois de MJJAS, moyennes sur des periodes de cinq ans se chevauchant', 
+                    'units': 'mm', 
+                    'accumulation_period': '1D'
+                    }
+        elif m == 'dcp_NDJFM':
+            if n == 'TT':
+                ds['TT'].attrs = {
+                    'long_name': 'air temperature (1.5m) / temperature de l’air (1,5m)', 
+                    'description_short_en': 'percentiles of mean 1.5m air temperature for the months of NDJFM, averaged over overlapping 5-year periods', 
+                    'description_short_fr': 'percentiles de la temperature moyenne de l’air a 1,5m pour les mois de NDJFM, moyennes sur des periodes de cinq ans se chevauchant', 
+                    'units': 'C'
+                    }
+            elif n == 'PR':
+                ds['PR'].attrs = {
+                    'long_name': 'quantity of precipitation / quantite de precipitations', 
+                    'description_short_en': 'percentiles of quantity of precipitation accumulated in mm per day for the months of NDJFM, averaged over overlapping 5-year periods', 
+                    'description_short_fr': 'percentiles de la quantite de precipitations accumulees en mm par jour pour les mois de NDJFM, moyennes sur des periodes de cinq ans se chevauchant', 
+                    'units': 'mm', 
+                    'accumulation_period': '1D'
+                    }
 
         # Add global attributes
         ds.attrs = {
@@ -153,7 +225,19 @@ for i, n in enumerate(var_name):
             ds.to_netcdf(save_path+'/mth_pctl_CaSRv3.2_1991-2020_AirTemp.nc', engine='netcdf4') 
         elif (n == 'TT') & (m == 'sea'):
             ds.to_netcdf(save_path+'/sea_pctl_CaSRv3.2_1991-2020_AirTemp.nc', engine='netcdf4') 
+        elif (n == 'TT') & (m == 'dcp_Ann'):
+            ds.to_netcdf(save_path+'/CaSRv3.2_dcp5Y-Ann_pctl_1991-2020_AirTemp.nc', engine='netcdf4')  
+        elif (n == 'TT') & (m == 'dcp_MJJAS'):
+            ds.to_netcdf(save_path+'/CaSRv3.2_dcp5Y-MJJAS_pctl_1991-2020_AirTemp.nc', engine='netcdf4')
+        elif (n == 'TT') & (m == 'dcp_NDJFM'):
+            ds.to_netcdf(save_path+'/CaSRv3.2_dcp5Y-NDJFM_pctl_1991-2020_AirTemp.nc', engine='netcdf4') 
         elif (n == 'PR') & (m == 'mon'):
             ds.to_netcdf(save_path+'/mth_pctl_CaSRv3.2_1991-2020_PrecipAccum.nc', engine='netcdf4') 
         elif (n == 'PR') & (m == 'sea'):
             ds.to_netcdf(save_path+'/sea_pctl_CaSRv3.2_1991-2020_PrecipAccum.nc', engine='netcdf4') 
+        elif (n == 'PR') & (m == 'dcp_Ann'):
+            ds.to_netcdf(save_path+'/CaSRv3.2_dcp5Y-Ann_pctl_1991-2020_PrecipAccum.nc', engine='netcdf4')  
+        elif (n == 'PR') & (m == 'dcp_MJJAS'):
+            ds.to_netcdf(save_path+'/CaSRv3.2_dcp5Y-MJJAS_pctl_1991-2020_PrecipAccum.nc', engine='netcdf4')
+        elif (n == 'PR') & (m == 'dcp_NDJFM'):
+            ds.to_netcdf(save_path+'/CaSRv3.2_dcp5Y-NDJFM_pctl_1991-2020_PrecipAccum.nc', engine='netcdf4') 
